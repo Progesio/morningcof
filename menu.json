@@ -1,0 +1,82 @@
+[
+  {
+    "id": "1",
+    "name": "Deluxe Pizza",
+    "price": 12.99,
+    "description": "Our signature pizza topped with pepperoni, mushrooms, bell peppers, and extra cheese. Made with our special homemade tomato sauce and freshly baked dough.",
+    "calories": 320,
+    "category": "food",
+    "shortDescription": "Topped with pepperoni, mushrooms, bell peppers, and extra cheese.",
+    "svg": "<svg class=\"w-full h-full\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"200\" height=\"200\" fill=\"#FFA07A\"/><circle cx=\"100\" cy=\"85\" r=\"60\" fill=\"#FF6347\"/><ellipse cx=\"100\" cy=\"140\" rx=\"70\" ry=\"20\" fill=\"#8B4513\"/><rect x=\"30\" y=\"140\" width=\"140\" height=\"10\" fill=\"#A0522D\"/><circle cx=\"70\" cy=\"85\" r=\"10\" fill=\"#FFFF00\"/><circle cx=\"100\" cy=\"70\" r=\"8\" fill=\"#FFFF00\"/><circle cx=\"130\" cy=\"85\" r=\"12\" fill=\"#FFFF00\"/></svg>"
+  },
+  {
+    "id": "2",
+    "name": "Burger Deluxe",
+    "price": 9.99,
+    "description": "A juicy 100% Angus beef patty topped with fresh lettuce, tomato, melted cheese, and our secret special sauce. Served with a side of crispy fries.",
+    "calories": 450,
+    "category": "food",
+    "shortDescription": "Juicy beef patty with lettuce, tomato, cheese, and special sauce.",
+    "svg": "<svg class=\"w-full h-full\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"200\" height=\"200\" fill=\"#F5DEB3\"/><rect x=\"40\" y=\"60\" width=\"120\" height=\"20\" fill=\"#8B4513\"/><rect x=\"40\" y=\"80\" width=\"120\" height=\"10\" fill=\"#D2691E\"/><rect x=\"40\" y=\"90\" width=\"120\" height=\"15\" fill=\"#228B22\"/><rect x=\"40\" y=\"105\" width=\"120\" height=\"10\" fill=\"#FF6347\"/><rect x=\"40\" y=\"115\" width=\"120\" height=\"20\" fill=\"#8B4513\"/><circle cx=\"160\" cy=\"50\" r=\"15\" fill=\"#FFD700\"/></svg>"
+  },
+  {
+    "id": "3",
+    "name": "Pasta Primavera",
+    "price": 11.49,
+    "description": "Al dente pasta tossed with fresh seasonal vegetables including bell peppers, zucchini, and cherry tomatoes in a light garlic cream sauce. Topped with freshly grated parmesan cheese.",
+    "calories": 380,
+    "category": "food",
+    "shortDescription": "Fresh pasta with seasonal vegetables in a light cream sauce.",
+    "svg": "<svg class=\"w-full h-full\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"200\" height=\"200\" fill=\"#FAFAD2\"/><path d=\"M40,140 Q100,60 160,140 Z\" fill=\"#FFA500\"/><path d=\"M60,140 Q100,80 140,140 Z\" fill=\"#FFFF00\"/><rect x=\"40\" y=\"140\" width=\"120\" height=\"10\" fill=\"#D2691E\"/><circle cx=\"80\" cy=\"110\" r=\"8\" fill=\"#FF0000\"/><circle cx=\"100\" cy=\"100\" r=\"8\" fill=\"#FF0000\"/><circle cx=\"120\" cy=\"110\" r=\"8\" fill=\"#FF0000\"/></svg>"
+  },
+  {
+    "id": "4",
+    "name": "Club Sandwich",
+    "price": 8.49,
+    "description": "A classic triple-decker sandwich with roasted turkey breast, crispy bacon, fresh lettuce, juicy tomato, and mayo on toasted bread. Served with a side of potato chips.",
+    "calories": 520,
+    "category": "food",
+    "shortDescription": "Triple-decker sandwich with turkey, bacon, lettuce, and tomato.",
+    "svg": "<svg class=\"w-full h-full\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"200\" height=\"200\" fill=\"#F0FFF0\"/><rect x=\"50\" y=\"70\" width=\"100\" height=\"80\" fill=\"#F5F5DC\"/><rect x=\"50\" y=\"70\" width=\"100\" height=\"20\" fill=\"#8B4513\"/><rect x=\"50\" y=\"90\" width=\"100\" height=\"15\" fill=\"#FF6347\"/><rect x=\"50\" y=\"105\" width=\"100\" height=\"15\" fill=\"#FFA07A\"/><rect x=\"50\" y=\"120\" width=\"100\" height=\"15\" fill=\"#FFDAB9\"/><rect x=\"50\" y=\"135\" width=\"100\" height=\"15\" fill=\"#F0E68C\"/></svg>"
+  },
+  {
+    "id": "5",
+    "name": "Iced Coffee",
+    "price": 3.99,
+    "description": "Our signature cold brew coffee steeped for 12 hours, served over ice with your choice of cream and sweetener. Available in small, medium, or large sizes.",
+    "calories": 120,
+    "category": "drink",
+    "shortDescription": "Cold brewed coffee served over ice with cream and sweetener.",
+    "svg": "<svg class=\"w-full h-full\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"200\" height=\"200\" fill=\"#E0FFFF\"/><path d=\"M80,40 L120,40 L130,60 L70,60 Z\" fill=\"#D2B48C\"/><path d=\"M70,60 L130,60 L120,160 L80,160 Z\" fill=\"#8B4513\"/><ellipse cx=\"100\" cy=\"60\" rx=\"30\" ry=\"5\" fill=\"#FFFFFF\" opacity=\"0.3\"/><rect x=\"95\" y=\"30\" width=\"10\" height=\"10\" fill=\"#D2B48C\"/></svg>"
+  },
+  {
+    "id": "6",
+    "name": "Orange Juice",
+    "price": 2.99,
+    "description": "100% freshly squeezed orange juice with no added sugar or preservatives. Packed with vitamin C and served chilled for maximum refreshment.",
+    "calories": 110,
+    "category": "drink",
+    "shortDescription": "Freshly squeezed orange juice, served chilled.",
+    "svg": "<svg class=\"w-full h-full\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"200\" height=\"200\" fill=\"#FFFACD\"/><path d=\"M80,50 L120,50 L110,160 L90,160 Z\" fill=\"#FF7F50\"/><ellipse cx=\"100\" cy=\"50\" rx=\"20\" ry=\"5\" fill=\"#FFFFFF\" opacity=\"0.3\"/><circle cx=\"100\" cy=\"80\" r=\"10\" fill=\"#FF4500\"/><path d=\"M95,50 C85,30 115,30 105,50\" stroke=\"#008000\" stroke-width=\"2\" fill=\"none\"/><circle cx=\"90\" cy=\"35\" r=\"5\" fill=\"#008000\"/></svg>"
+  },
+  {
+    "id": "7",
+    "name": "Green Smoothie",
+    "price": 4.99,
+    "description": "A nutritious blend of fresh spinach, kale, ripe banana, and almond milk. Packed with vitamins and antioxidants. Add protein powder or chia seeds for an extra boost.",
+    "calories": 220,
+    "category": "drink",
+    "shortDescription": "Blend of spinach, kale, banana, and almond milk.",
+    "svg": "<svg class=\"w-full h-full\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"200\" height=\"200\" fill=\"#F0FFF0\"/><path d=\"M70,60 L130,60 L120,160 L80,160 Z\" fill=\"#98FB98\"/><ellipse cx=\"100\" cy=\"60\" rx=\"30\" ry=\"5\" fill=\"#FFFFFF\" opacity=\"0.3\"/><path d=\"M90,60 C80,40 120,40 110,60\" stroke=\"#006400\" stroke-width=\"2\" fill=\"none\"/><path d=\"M85,50 C75,30 125,30 115,50\" stroke=\"#006400\" stroke-width=\"2\" fill=\"none\"/><circle cx=\"80\" cy=\"35\" r=\"5\" fill=\"#006400\"/><circle cx=\"100\" cy=\"25\" r=\"5\" fill=\"#006400\"/><circle cx=\"120\" cy=\"35\" r=\"5\" fill=\"#006400\"/></svg>"
+  },
+  {
+    "id": "8",
+    "name": "Berry Blast",
+    "price": 4.49,
+    "description": "A refreshing blend of strawberries, blueberries, raspberries, and blackberries mixed with creamy yogurt and a touch of honey. A perfect balance of sweet and tart flavors.",
+    "calories": 190,
+    "category": "drink",
+    "shortDescription": "Mixed berry smoothie with yogurt and honey.",
+    "svg": "<svg class=\"w-full h-full\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"200\" height=\"200\" fill=\"#FFF0F5\"/><path d=\"M80,50 L120,50 L110,160 L90,160 Z\" fill=\"#FFB6C1\"/><ellipse cx=\"100\" cy=\"50\" rx=\"20\" ry=\"5\" fill=\"#FFFFFF\" opacity=\"0.3\"/><circle cx=\"95\" cy=\"80\" r=\"8\" fill=\"#FF69B4\"/><circle cx=\"110\" cy=\"90\" r=\"6\" fill=\"#FF69B4\"/><circle cx=\"90\" cy=\"100\" r=\"7\" fill=\"#FF69B4\"/><path d=\"M95,50 C85,30 115,30 105,50\" stroke=\"#FF1493\" stroke-width=\"2\" fill=\"none\"/></svg>"
+  }
+]

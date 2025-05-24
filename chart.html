@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu & Cart System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .menu-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            transition: transform 0.2s ease;
+        }
+        
+        .cart-badge.pulse {
+            animation: pulse 0.5s;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        .cart-panel {
+            transition: transform 0.4s ease;
+        }
+        
+        .modal {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: grid;
+        }
+        
+        .tab-btn {
+            position: relative;
+        }
+        
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: #4f46e5;
+            transition: width 0.3s ease;
+        }
+        
+        .tab-btn.active::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-indigo-800">Morning Coffe Menus</h1>
+            <div class="relative">
+                <button id="cartBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-indigo-700 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span>Cart</span>
+                </button>
+                <div id="cartBadge" class="cart-badge hidden bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center">0</div>
+            </div>
+        </header>
+
+        <!-- Menu Tabs -->
+        <div class="flex border-b border-gray-200 mb-6">
+            <button class="tab-btn active px-6 py-3 text-lg font-medium text-indigo-600 hover:text-indigo-800" data-tab="food" type="button">
+                Food
+            </button>
+            <button class="tab-btn px-6 py-3 text-lg font-medium text-gray-500 hover:text-indigo-600" data-tab="drinks" type="button">
+                Drinks
+            </button>
+        </div>
+
+        <!-- Food Menu Grid -->
+        <div id="foodTab" class="tab-content active grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Food Item 1 -->
+            <div class="menu-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="200" height="200" fill="#FFA07A"/>
+                        <circle cx="100" cy="85" r="60" fill="#FF6347"/>
+                        <ellipse cx="100" cy="140" rx="70" ry="20" fill="#8B4513"/>
+                        <rect x="30" y="140" width="140" height="10" fill="#A0522D"/>
+                        <circle cx="70" cy="85" r="10" fill="#FFFF00"/>
+                        <circle cx="100" cy="70" r="8" fill="#FFFF00"/>
+                        <circle cx="130" cy="85" r="12" fill="#FFFF00"/>
+                    </svg>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-gray-800">Deluxe Pizza</h3>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">$12.99</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">Topped with pepperoni, mushrooms, bell peppers, and extra cheese.</p>
+                    <div class="flex mt-4 space-x-2">
+                        <button class="view-details flex-1 bg-indigo-100 text-indigo-700 py-2 rounded-lg hover:bg-indigo-200 transition" 
+                            data-id="1" 
+                            data-name="Deluxe Pizza" 
+                            data-price="12.99" 
+                            data-description="Our signature pizza topped with pepperoni, mushrooms, bell peppers, and extra cheese. Made with our special homemade tomato sauce and freshly baked dough."
+                            data-calories="320"
+                            data-category="food">
+                            View Details
+                        </button>
+                        <button class="add-to-cart flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition" 
+                            data-id="1" 
+                            data-name="Deluxe Pizza" 
+                            data-price="12.99">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Food Item 2 -->
+            <div class="menu-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="200" height="200" fill="#F5DEB3"/>
+                        <rect x="40" y="60" width="120" height="20" fill="#8B4513"/>
+                        <rect x="40" y="80" width="120" height="10" fill="#D2691E"/>
+                        <rect x="40" y="90" width="120" height="15" fill="#228B22"/>
+                        <rect x="40" y="105" width="120" height="10" fill="#FF6347"/>
+                        <rect x="40" y="115" width="120" height="20" fill="#8B4513"/>
+                        <circle cx="160" cy="50" r="15" fill="#FFD700"/>
+                    </svg>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-gray-800">Burger Deluxe</h3>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">$9.99</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">Juicy beef patty with lettuce, tomato, cheese, and special sauce.</p>
+                    <div class="flex mt-4 space-x-2">
+                        <button class="view-details flex-1 bg-indigo-100 text-indigo-700 py-2 rounded-lg hover:bg-indigo-200 transition" 
+                            data-id="2" 
+                            data-name="Burger Deluxe" 
+                            data-price="9.99" 
+                            data-description="A juicy 100% Angus beef patty topped with fresh lettuce, tomato, melted cheese, and our secret special sauce. Served with a side of crispy fries."
+                            data-calories="450"
+                            data-category="food">
+                            View Details
+                        </button>
+                        <button class="add-to-cart flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition" 
+                            data-id="2" 
+                            data-name="Burger Deluxe" 
+                            data-price="9.99">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Food Item 3 -->
+            <div class="menu-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="200" height="200" fill="#FAFAD2"/>
+                        <path d="M40,140 Q100,60 160,140 Z" fill="#FFA500"/>
+                        <path d="M60,140 Q100,80 140,140 Z" fill="#FFFF00"/>
+                        <rect x="40" y="140" width="120" height="10" fill="#D2691E"/>
+                        <circle cx="80" cy="110" r="8" fill="#FF0000"/>
+                        <circle cx="100" cy="100" r="8" fill="#FF0000"/>
+                        <circle cx="120" cy="110" r="8" fill="#FF0000"/>
+                    </svg>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-gray-800">Pasta Primavera</h3>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">$11.49</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">Fresh pasta with seasonal vegetables in a light cream sauce.</p>
+                    <div class="flex mt-4 space-x-2">
+                        <button class="view-details flex-1 bg-indigo-100 text-indigo-700 py-2 rounded-lg hover:bg-indigo-200 transition" 
+                            data-id="3" 
+                            data-name="Pasta Primavera" 
+                            data-price="11.49" 
+                            data-description="Al dente pasta tossed with fresh seasonal vegetables including bell peppers, zucchini, and cherry tomatoes in a light garlic cream sauce. Topped with freshly grated parmesan cheese."
+                            data-calories="380"
+                            data-category="food">
+                            View Details
+                        </button>
+                        <button class="add-to-cart flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition" 
+                            data-id="3" 
+                            data-name="Pasta Primavera" 
+                            data-price="11.49">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Food Item 4 -->
+            <div class="menu-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="200" height="200" fill="#F0FFF0"/>
+                        <rect x="50" y="70" width="100" height="80" fill="#F5F5DC"/>
+                        <rect x="50" y="70" width="100" height="20" fill="#8B4513"/>
+                        <rect x="50" y="90" width="100" height="15" fill="#FF6347"/>
+                        <rect x="50" y="105" width="100" height="15" fill="#FFA07A"/>
+                        <rect x="50" y="120" width="100" height="15" fill="#FFDAB9"/>
+                        <rect x="50" y="135" width="100" height="15" fill="#F0E68C"/>
+                    </svg>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-gray-800">Club Sandwich</h3>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">$8.49</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">Triple-decker sandwich with turkey, bacon, lettuce, and tomato.</p>
+                    <div class="flex mt-4 space-x-2">
+                        <button class="view-details flex-1 bg-indigo-100 text-indigo-700 py-2 rounded-lg hover:bg-indigo-200 transition" 
+                            data-id="4" 
+                            data-name="Club Sandwich" 
+                            data-price="8.49" 
+                            data-description="A classic triple-decker sandwich with roasted turkey breast, crispy bacon, fresh lettuce, juicy tomato, and mayo on toasted bread. Served with a side of potato chips."
+                            data-calories="520"
+                            data-category="food">
+                            View Details
+                        </button>
+                        <button class="add-to-cart flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition" 
+                            data-id="4" 
+                            data-name="Club Sandwich" 
+                            data-price="8.49">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drinks Menu Grid -->
+        <div id="drinksTab" class="tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Drink Item 1 -->
+            <div class="menu-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="200" height="200" fill="#E0FFFF"/>
+                        <path d="M80,40 L120,40 L130,60 L70,60 Z" fill="#D2B48C"/>
+                        <path d="M70,60 L130,60 L120,160 L80,160 Z" fill="#8B4513"/>
+                        <ellipse cx="100" cy="60" rx="30" ry="5" fill="#FFFFFF" opacity="0.3"/>
+                        <rect x="95" y="30" width="10" height="10" fill="#D2B48C"/>
+                    </svg>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-gray-800">Iced Coffee</h3>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">$3.99</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">Cold brewed coffee served over ice with cream and sweetener.</p>
+                    <div class="flex mt-4 space-x-2">
+                        <button class="view-details flex-1 bg-indigo-100 text-indigo-700 py-2 rounded-lg hover:bg-indigo-200 transition" 
+                            data-id="5" 
+                            data-name="Iced Coffee" 
+                            data-price="3.99" 
+                            data-description="Our signature cold brew coffee steeped for 12 hours, served over ice with your choice of cream and sweetener. Available in small, medium, or large sizes."
+                            data-calories="120"
+                            data-category="drink">
+                            View Details
+                        </button>
+                        <button class="add-to-cart flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition" 
+                            data-id="5" 
+                            data-name="Iced Coffee" 
+                            data-price="3.99">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drink Item 2 -->
+            <div class="menu-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="200" height="200" fill="#FFFACD"/>
+                        <path d="M80,50 L120,50 L110,160 L90,160 Z" fill="#FF7F50"/>
+                        <ellipse cx="100" cy="50" rx="20" ry="5" fill="#FFFFFF" opacity="0.3"/>
+                        <circle cx="100" cy="80" r="10" fill="#FF4500"/>
+                        <path d="M95,50 C85,30 115,30 105,50" stroke="#008000" stroke-width="2" fill="none"/>
+                        <circle cx="90" cy="35" r="5" fill="#008000"/>
+                    </svg>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-gray-800">Orange Juice</h3>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">$2.99</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">Freshly squeezed orange juice, served chilled.</p>
+                    <div class="flex mt-4 space-x-2">
+                        <button class="view-details flex-1 bg-indigo-100 text-indigo-700 py-2 rounded-lg hover:bg-indigo-200 transition" 
+                            data-id="6" 
+                            data-name="Orange Juice" 
+                            data-price="2.99" 
+                            data-description="100% freshly squeezed orange juice with no added sugar or preservatives. Packed with vitamin C and served chilled for maximum refreshment."
+                            data-calories="110"
+                            data-category="drink">
+                            View Details
+                        </button>
+                        <button class="add-to-cart flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition" 
+                            data-id="6" 
+                            data-name="Orange Juice" 
+                            data-price="2.99">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drink Item 3 -->
+            <div class="menu-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="200" height="200" fill="#F0FFF0"/>
+                        <path d="M70,60 L130,60 L120,160 L80,160 Z" fill="#98FB98"/>
+                        <ellipse cx="100" cy="60" rx="30" ry="5" fill="#FFFFFF" opacity="0.3"/>
+                        <path d="M90,60 C80,40 120,40 110,60" stroke="#006400" stroke-width="2" fill="none"/>
+                        <path d="M85,50 C75,30 125,30 115,50" stroke="#006400" stroke-width="2" fill="none"/>
+                        <circle cx="80" cy="35" r="5" fill="#006400"/>
+                        <circle cx="100" cy="25" r="5" fill="#006400"/>
+                        <circle cx="120" cy="35" r="5" fill="#006400"/>
+                    </svg>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-gray-800">Green Smoothie</h3>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">$4.99</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">Blend of spinach, kale, banana, and almond milk.</p>
+                    <div class="flex mt-4 space-x-2">
+                        <button class="view-details flex-1 bg-indigo-100 text-indigo-700 py-2 rounded-lg hover:bg-indigo-200 transition" 
+                            data-id="7" 
+                            data-name="Green Smoothie" 
+                            data-price="4.99" 
+                            data-description="A nutritious blend of fresh spinach, kale, ripe banana, and almond milk. Packed with vitamins and antioxidants. Add protein powder or chia seeds for an extra boost."
+                            data-calories="220"
+                            data-category="drink">
+                            View Details
+                        </button>
+                        <button class="add-to-cart flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition" 
+                            data-id="7" 
+                            data-name="Green Smoothie" 
+                            data-price="4.99">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drink Item 4 -->
+            <div class="menu-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="200" height="200" fill="#FFF0F5"/>
+                        <path d="M80,50 L120,50 L110,160 L90,160 Z" fill="#FFB6C1"/>
+                        <ellipse cx="100" cy="50" rx="20" ry="5" fill="#FFFFFF" opacity="0.3"/>
+                        <circle cx="95" cy="80" r="8" fill="#FF69B4"/>
+                        <circle cx="110" cy="90" r="6" fill="#FF69B4"/>
+                        <circle cx="90" cy="100" r="7" fill="#FF69B4"/>
+                        <path d="M95,50 C85,30 115,30 105,50" stroke="#FF1493" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <div class="p-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-gray-800">Berry Blast</h3>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">$4.49</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">Mixed berry smoothie with yogurt and honey.</p>
+                    <div class="flex mt-4 space-x-2">
+                        <button class="view-details flex-1 bg-indigo-100 text-indigo-700 py-2 rounded-lg hover:bg-indigo-200 transition" 
+                            data-id="8" 
+                            data-name="Berry Blast" 
+                            data-price="4.49" 
+                            data-description="A refreshing blend of strawberries, blueberries, raspberries, and blackberries mixed with creamy yogurt and a touch of honey. A perfect balance of sweet and tart flavors."
+                            data-calories="190"
+                            data-category="drink">
+                            View Details
+                        </button>
+                        <button class="add-to-cart flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition" 
+                            data-id="8" 
+                            data-name="Berry Blast" 
+                            data-price="4.49">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Panel -->
+    <div id="cartPanel" class="cart-panel fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full z-30">
+        <div class="p-4 bg-indigo-600 text-white flex justify-between items-center">
+            <h2 class="text-xl font-bold">Your Cart</h2>
+            <button id="closeCart" class="text-white hover:text-indigo-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div id="cartItems" class="p-4 overflow-y-auto h-[calc(100%-180px)]">
+            <p class="text-gray-500 text-center py-8">Your cart is empty</p>
+        </div>
+        <div class="border-t p-4 bg-gray-50">
+            <div class="flex justify-between mb-4">
+                <span class="font-semibold">Total:</span>
+                <span id="cartTotal" class="font-bold">$0.00</span>
+            </div>
+            <button id="checkoutBtn" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition disabled:bg-gray-400" disabled>
+                Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Item Detail Modal -->
+    <div id="detailModal" class="modal fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 opacity-0 pointer-events-none">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-md transform scale-95 transition-all">
+            <div class="relative">
+                <div id="modalImage" class="h-48 bg-indigo-100 rounded-t-lg flex items-center justify-center">
+                    <!-- SVG will be inserted here -->
+                </div>
+                <button id="closeModal" class="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 id="modalTitle" class="text-2xl font-bold text-gray-800">Item Name</h3>
+                    <span id="modalPrice" class="bg-green-100 text-green-800 text-lg font-medium px-3 py-1 rounded">$0.00</span>
+                </div>
+                <div class="mb-4">
+                    <span id="modalCategory" class="text-xs font-medium bg-indigo-100 text-indigo-800 px-2 py-1 rounded">Category</span>
+                    <span id="modalCalories" class="text-xs font-medium bg-orange-100 text-orange-800 px-2 py-1 rounded ml-2">0 cal</span>
+                </div>
+                <p id="modalDescription" class="text-gray-600 mb-6">Description goes here</p>
+                <button id="modalAddToCart" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition">
+                    Add to Cart - <span id="modalButtonPrice">$0.00</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 opacity-0 pointer-events-none">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-md transform scale-95">
+            <div class="p-6 border-b">
+                <h3 class="text-2xl font-bold text-gray-800">Your Bill</h3>
+            </div>
+            <div class="p-6">
+                <div id="billItems" class="mb-6 space-y-2">
+                    <!-- Bill items will be inserted here -->
+                </div>
+                <div class="border-t pt-4">
+                    <div class="flex justify-between font-bold text-lg">
+                        <span>Total:</span>
+                        <span id="billTotal">$0.00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 flex justify-end rounded-b-lg">
+                <button id="closeBill" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black opacity-0 pointer-events-none transition-opacity z-20"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load menu data from JSON
+            fetch('menu.json')
+                .then(response => response.json())
+                .then(menuData => {
+                    renderMenu(menuData);
+                    setupTabs();
+                    setupCart(menuData);
+                });
+
+            function renderMenu(menuData) {
+                const foodTab = document.getElementById('foodTab');
+                const drinksTab = document.getElementById('drinksTab');
+                foodTab.innerHTML = '';
+                drinksTab.innerHTML = '';
+                menuData.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'menu-card bg-white rounded-xl overflow-hidden shadow-md';
+                    card.innerHTML = `
+                        <div class="h-48 overflow-hidden">${item.svg}</div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-start">
+                                <h3 class="text-xl font-semibold text-gray-800">${item.name}</h3>
+                                <span class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">$${item.price.toFixed(2)}</span>
+                            </div>
+                            <p class="text-gray-600 mt-2">${item.shortDescription}</p>
+                            <div class="flex mt-4 space-x-2">
+                                <button class="view-details flex-1 bg-indigo-100 text-indigo-700 py-2 rounded-lg hover:bg-indigo-200 transition" 
+                                    data-id="${item.id}" 
+                                    data-name="${item.name}" 
+                                    data-price="${item.price}" 
+                                    data-description="${item.description}"
+                                    data-calories="${item.calories}"
+                                    data-category="${item.category}">
+                                    View Details
+                                </button>
+                                <button class="add-to-cart flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition" 
+                                    data-id="${item.id}" 
+                                    data-name="${item.name}" 
+                                    data-price="${item.price}">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    if(item.category === 'food') {
+                        foodTab.appendChild(card);
+                    } else {
+                        drinksTab.appendChild(card);
+                    }
+                });
+            }
+
+            function setupTabs() {
+                const tabBtns = document.querySelectorAll('.tab-btn');
+                const tabContents = document.querySelectorAll('.tab-content');
+                tabBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const tabId = this.dataset.tab;
+                        tabBtns.forEach(btn => {
+                            btn.classList.remove('active');
+                            btn.classList.remove('text-indigo-600');
+                            btn.classList.add('text-gray-500');
+                        });
+                        tabContents.forEach(content => {
+                            content.classList.remove('active');
+                            content.style.display = 'none';
+                        });
+                        this.classList.add('active');
+                        this.classList.remove('text-gray-500');
+                        this.classList.add('text-indigo-600');
+                        const tabContent = document.getElementById(`${tabId}Tab`);
+                        tabContent.classList.add('active');
+                        tabContent.style.display = 'grid';
+                    });
+                });
+            }
+
+            function setupCart(menuData) {
+                // Cart functionality
+                const cartBtn = document.getElementById('cartBtn');
+                const closeCart = document.getElementById('closeCart');
+                const cartPanel = document.getElementById('cartPanel');
+                const overlay = document.getElementById('overlay');
+                const cartItems = document.getElementById('cartItems');
+                const cartTotal = document.getElementById('cartTotal');
+                const cartBadge = document.getElementById('cartBadge');
+                const checkoutBtn = document.getElementById('checkoutBtn');
+                const checkoutModal = document.getElementById('checkoutModal');
+                const billItems = document.getElementById('billItems');
+                const billTotal = document.getElementById('billTotal');
+                const closeBill = document.getElementById('closeBill');
+                
+                // Detail modal elements
+                const detailModal = document.getElementById('detailModal');
+                const closeModal = document.getElementById('closeModal');
+                const modalImage = document.getElementById('modalImage');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalPrice = document.getElementById('modalPrice');
+                const modalDescription = document.getElementById('modalDescription');
+                const modalCategory = document.getElementById('modalCategory');
+                const modalCalories = document.getElementById('modalCalories');
+                const modalAddToCart = document.getElementById('modalAddToCart');
+                const modalButtonPrice = document.getElementById('modalButtonPrice');
+                
+                let cart = [];
+                let currentItem = null;
+                
+                // Add to cart functionality
+                document.addEventListener('click', function(e) {
+                    if(e.target.classList.contains('add-to-cart')) {
+                        const btn = e.target;
+                        addToCart(btn.dataset.id, btn.dataset.name, parseFloat(btn.dataset.price));
+                    }
+                    if(e.target.classList.contains('view-details')) {
+                        const btn = e.target;
+                        showItemDetails(
+                            btn.dataset.id,
+                            btn.dataset.name,
+                            parseFloat(btn.dataset.price),
+                            btn.dataset.description,
+                            btn.dataset.calories,
+                            btn.dataset.category
+                        );
+                    }
+                });
+                
+                // Open cart panel
+                cartBtn.addEventListener('click', function() {
+                    cartPanel.classList.remove('translate-x-full');
+                    overlay.classList.add('opacity-50');
+                    overlay.classList.remove('pointer-events-none');
+                });
+                
+                // Close cart panel
+                closeCart.addEventListener('click', function() {
+                    cartPanel.classList.add('translate-x-full');
+                    overlay.classList.remove('opacity-50');
+                    overlay.classList.add('pointer-events-none');
+                });
+                
+                // Close detail modal
+                closeModal.addEventListener('click', function() {
+                    detailModal.classList.add('opacity-0', 'pointer-events-none');
+                    detailModal.classList.remove('opacity-100');
+                    overlay.classList.remove('opacity-50');
+                    overlay.classList.add('pointer-events-none');
+                });
+                
+                // Add to cart from modal
+                modalAddToCart.addEventListener('click', function() {
+                    if (currentItem) {
+                        addToCart(currentItem.id, currentItem.name, currentItem.price);
+                        detailModal.classList.add('opacity-0', 'pointer-events-none');
+                        detailModal.classList.remove('opacity-100');
+                        overlay.classList.remove('opacity-50');
+                        overlay.classList.add('pointer-events-none');
+                    }
+                });
+                
+                overlay.addEventListener('click', function() {
+                    cartPanel.classList.add('translate-x-full');
+                    detailModal.classList.add('opacity-0', 'pointer-events-none');
+                    detailModal.classList.remove('opacity-100');
+                    checkoutModal.classList.add('opacity-0', 'pointer-events-none');
+                    checkoutModal.classList.remove('opacity-100');
+                    overlay.classList.remove('opacity-50');
+                    overlay.classList.add('pointer-events-none');
+                });
+                
+                // Checkout button
+                checkoutBtn.addEventListener('click', function() {
+                    showBill();
+                    cartPanel.classList.add('translate-x-full');
+                    // Tambahkan tombol bayar iPaymu di modal bill
+                    setTimeout(() => {
+                        let payBtn = document.getElementById('ipaymuPayBtn');
+                        if (!payBtn) {
+                            payBtn = document.createElement('button');
+                            payBtn.id = 'ipaymuPayBtn';
+                            payBtn.className = 'w-full mt-4 bg-yellow-500 text-white py-3 rounded-lg hover:bg-yellow-600 transition';
+                            payBtn.innerText = 'Bayar dengan iPaymu';
+                            payBtn.onclick = function() {
+                                redirectToIpaymu(cart);
+                            };
+                            billItems.parentNode.appendChild(payBtn);
+                        }
+                    }, 100);
+                });
+                
+                // Close bill
+                closeBill.addEventListener('click', function() {
+                    checkoutModal.classList.add('opacity-0', 'pointer-events-none');
+                    checkoutModal.classList.remove('opacity-100');
+                    overlay.classList.remove('opacity-50');
+                    overlay.classList.add('pointer-events-none');
+                });
+                
+                // Tambahkan fungsi checkout ke iPaymu
+                function redirectToIpaymu(cart) {
+                    // Hitung total dan buat deskripsi item
+                    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    const product = cart.map(item => item.name).join(', ');
+                    const qty = cart.map(item => item.quantity).join(',');
+                    const price = cart.map(item => item.price).join(',');
+
+                    // Data iPaymu
+                    const va = '0000001221723861'; // Ganti dengan VA iPaymu Anda
+                    const url = 'https://sandbox.ipaymu.com/';
+                    const notifyUrl = window.location.origin + '/ipaymu-notify'; // opsional
+                    const returnUrl = window.location.origin + '/ipaymu-return'; // opsional
+
+                    // Buat form dinamis dan submit
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = url;
+                    form.target = '_self';
+
+                    // Data wajib
+                    form.innerHTML = `
+                        <input type="hidden" name="key" value="${va}">
+                        <input type="hidden" name="product[]" value="${product}">
+                        <input type="hidden" name="qty[]" value="${qty}">
+                        <input type="hidden" name="price[]" value="${price}">
+                        <input type="hidden" name="returnUrl" value="${returnUrl}">
+                        <input type="hidden" name="notifyUrl" value="${notifyUrl}">
+                    `;
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+                
+                function addToCart(id, name, price) {
+                    // Check if item is already in cart
+                    const existingItem = cart.find(item => item.id === id);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id,
+                            name,
+                            price,
+                            quantity: 1
+                        });
+                    }
+                    
+                    updateCart();
+                    animateCartBadge();
+                }
+                
+                function updateCart() {
+                    // Update cart items display
+                    if (cart.length === 0) {
+                        cartItems.innerHTML = '<p class="text-gray-500 text-center py-8">Your cart is empty</p>';
+                        cartBadge.classList.add('hidden');
+                        checkoutBtn.disabled = true;
+                    } else {
+                        let itemsHTML = '';
+                        let totalItems = 0;
+                        
+                        cart.forEach(item => {
+                            totalItems += item.quantity;
+                            itemsHTML += `
+                                <div class="flex justify-between items-center py-2 border-b">
+                                    <div>
+                                        <h4 class="font-medium">${item.name}</h4>
+                                        <div class="text-sm text-gray-600">$${item.price.toFixed(2)} × ${item.quantity}</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="font-medium">$${(item.price * item.quantity).toFixed(2)}</span>
+                                        <button class="remove-item ml-2 text-red-500 hover:text-red-700" data-id="${item.id}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        cartItems.innerHTML = itemsHTML;
+                        cartBadge.textContent = totalItems;
+                        cartBadge.classList.remove('hidden');
+                        checkoutBtn.disabled = false;
+                        
+                        // Add event listeners to remove buttons
+                        document.querySelectorAll('.remove-item').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const id = this.dataset.id;
+                                removeFromCart(id);
+                            });
+                        });
+                    }
+                    
+                    // Update total
+                    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    cartTotal.textContent = `$${total.toFixed(2)}`;
+                }
+                
+                function removeFromCart(id) {
+                    const itemIndex = cart.findIndex(item => item.id === id);
+                    
+                    if (itemIndex !== -1) {
+                        if (cart[itemIndex].quantity > 1) {
+                            cart[itemIndex].quantity -= 1;
+                        } else {
+                            cart.splice(itemIndex, 1);
+                        }
+                        
+                        updateCart();
+                    }
+                }
+                
+                function showItemDetails(id, name, price, description, calories, category) {
+                    currentItem = { id, name, price };
+                    
+                    // Set modal content
+                    modalTitle.textContent = name;
+                    modalPrice.textContent = `$${price.toFixed(2)}`;
+                    modalDescription.textContent = description;
+                    modalCategory.textContent = category === 'food' ? 'Food' : 'Drink';
+                    modalCalories.textContent = `${calories} cal`;
+                    modalButtonPrice.textContent = `$${price.toFixed(2)}`;
+                    
+                    // Set modal image based on item id
+                    const svgElement = document.querySelector(`[data-id="${id}"]`).closest('.menu-card').querySelector('svg').cloneNode(true);
+                    modalImage.innerHTML = '';
+                    modalImage.appendChild(svgElement);
+                    
+                    // Show modal
+                    detailModal.classList.remove('opacity-0', 'pointer-events-none');
+                    detailModal.classList.add('opacity-100');
+                    overlay.classList.add('opacity-50');
+                    overlay.classList.remove('pointer-events-none');
+                }
+                
+                function showBill() {
+                    let itemsHTML = '';
+                    
+                    cart.forEach(item => {
+                        itemsHTML += `
+                            <div class="flex justify-between">
+                                <span>${item.name} × ${item.quantity}</span>
+                                <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        `;
+                    });
+                    
+                    billItems.innerHTML = itemsHTML;
+                    
+                    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    billTotal.textContent = `$${total.toFixed(2)}`;
+                    
+                    checkoutModal.classList.remove('opacity-0', 'pointer-events-none');
+                    checkoutModal.classList.add('opacity-100');
+                    overlay.classList.add('opacity-50');
+                    overlay.classList.remove('pointer-events-none');
+                }
+                
+                function animateCartBadge() {
+                    cartBadge.classList.add('pulse');
+                    setTimeout(() => {
+                        cartBadge.classList.remove('pulse');
+                    }, 500);
+                }
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'944c8ce335a9ea7f',t:'MTc0ODA4NzE2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
